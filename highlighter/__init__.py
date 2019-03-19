@@ -4,8 +4,8 @@ date: 12.12.2012
 author smith@example.com
 license: MIT"""
 
+import re
 from flask import Flask, render_template, request, Markup
-
 
 def create_app():
     """Create flask app for binding."""
@@ -45,8 +45,8 @@ def create_app():
         @:return marked text, e.g., "<mark>Th</mark>e sun in <mark>th</mark>e sky"."""
         result = text
 
-        # TODO: add an implementation
-
-        return result
+        new_expr = '(%s)' % re.escape(expr)
+        result = re.compile(new_expr, re.IGNORECASE)
+        return result.sub(r"<mark>\1</mark>", text)
 
     return app
