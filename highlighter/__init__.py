@@ -27,16 +27,13 @@ def create_app():
                   }
         return render_template(template_file_name, **result)
 
-    def markup_text(text):
+    def markup_text():
         """Markup given text.
         This is supplementary method that helps you to wrap marked text in tags.
         @:param text - string text to be marked
         @:return marked text, e.g., <mark>highlighted text</mark>."""
-        result = text
 
-        # TODO: add an implementation
-
-        return result
+        return r"<mark>\1</mark>"
 
     def highlight_text(text, expr):
         """Markup searched string in given text.
@@ -47,6 +44,6 @@ def create_app():
 
         new_expr = '(%s)' % re.escape(expr)
         result = re.compile(new_expr, re.IGNORECASE)
-        return result.sub(r"<mark>\1</mark>", text)
+        return result.sub(markup_text(), text)
 
     return app
